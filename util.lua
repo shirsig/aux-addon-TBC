@@ -8,15 +8,15 @@ M.immutable = setmetatable(T, {
 	end
 })
 
-M.select = vararg-function(arg)
+M.select = _G.select or vararg-function(arg)
 	for _ = 1, arg[1] do
 		tremove(arg, 1)
 	end
-	if arg.n < 2 then
-		return nil
-	else
-		return unpack(arg)
-	end
+	return unpack(arg)
+end
+
+M.tonumber = function(v)
+	return _G.tonumber(v or nil)
 end
 
 M.join = table.concat
