@@ -1,3 +1,8 @@
+if _G then
+	table.setn = function() end
+	string.gfind = string.gmatch
+end
+
 local format_key, format_value, print, print_pair, print_table
 
 function print(msg)
@@ -42,13 +47,13 @@ function print_pair(k, v, depth)
 end
 
 function inspect(_, ...)
-	local n = arg.n
-	arg.n = nil
-	table.setn(arg, n)
+--	local n = arg.n
+--	arg.n = nil
+--	table.setn(arg, n)
 	max_depth = max_depth or 2
-	print_table(arg, 0)
+	print_table({...}, 0)
 	max_depth = nil
-	return unpack(arg)
+	return ...
 end
 
 local function setting(v)

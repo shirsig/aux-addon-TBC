@@ -99,7 +99,7 @@ do
 	M.menu = vararg-function(arg)
 		HideDropDownMenu(1)
 		UIDropDownMenu_Initialize(menu, function()
-			for i = 1, getn(arg), 2 do
+			for i = 1, arg.n, 2 do
 				UIDropDownMenu_AddButton(O('text', arg[i], 'notCheckable', true, 'func', arg[i + 1]))
 			end
 		end, 'MENU')

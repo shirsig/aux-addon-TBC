@@ -75,7 +75,11 @@ function M.event_listener(event, cb)
 	listeners[listener_id] = O(
 		'event', event,
 		'cb', cb,
-		'kill', vararg-function(arg) if getn(arg) == 0 or arg[1] then kill_listener(listener_id) end end
+		'kill', vararg-function(arg)
+			if arg.n == 0 or arg[1] then
+				kill_listener(listener_id)
+			end
+		end
 	)
 	event_frame:RegisterEvent(event)
 	return listener_id

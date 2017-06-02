@@ -88,7 +88,9 @@ do
 	for scope in pairs(temp-S('character', 'faction', 'realm', 'account')) do
 		local scope = scope
 		M[scope .. '_data'] = function(key, init)
-			if not cache[scope] then error('Cache not ready', 2) end
+			if not cache[scope]
+				then error('Cache not ready', 2)
+			end
 			cache[scope][key] = cache[scope][key] or {}
 			for k, v in pairs(init or empty) do
 				if cache[scope][key][k] == nil then
@@ -145,7 +147,7 @@ end
 M.orig = setmetatable({[_G]=T}, {__index=function(self, key) return self[_G][key] end})
 M.hook = vararg-function(arg)
 	local name, object, handler
-	if getn(arg) == 3 then
+	if arg.n == 3 then
 		name, object, handler = unpack(arg)
 	else
 		object, name, handler = _G, unpack(arg)
@@ -244,7 +246,9 @@ function Blizzard_AuctionUI()
 	AuctionFrame:UnregisterEvent('AUCTION_HOUSE_SHOW')
 	AuctionFrame:SetScript('OnHide', nil)
 	hook('ShowUIPanel', vararg-function(arg)
-		if arg[1] == AuctionFrame then return AuctionFrame:Show() end
+		if arg[1] == AuctionFrame then
+			return AuctionFrame:Show()
+		end
 		return orig.ShowUIPanel(unpack(arg))
 	end)
 	hook 'GetOwnerAuctionItems' 'SetItemRef' 'UseContainerItem' 'AuctionFrameAuctions_OnEvent'

@@ -95,7 +95,8 @@ do
 		until true
 		local t = acquire()
 		auto_release[t] = true
-		setn(t, n)
+		setn(t, n) -- TODO
+		t.n = n
 		repeat
 	]]
 	for i = 1, MAXPARAMS - 1 do
@@ -119,19 +120,23 @@ do
 end
 
 M.A = vararg(function(arg)
-	auto_release[arg] = nil
-	return arg
+	local t = acquire()
+	for i = 1, arg.n do
+		t[i] = arg[i]
+	end
+	setn(t, arg.n)
+	return t
 end)
 M.S = vararg(function(arg)
 	local t = acquire()
-	for _, v in pairs(arg) do
-		t[v] = true
+	for i = 1, arg.n do
+		t[arg[i]] = true
 	end
 	return t
 end)
 M.O = vararg(function(arg)
 	local t = acquire()
-	for i = 1, getn(arg), 2 do
+	for i = 1, arg.n, 2 do
 		t[arg[i]] = arg[i + 1]
 	end
 	return t

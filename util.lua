@@ -12,7 +12,7 @@ M.select = vararg-function(arg)
 	for _ = 1, arg[1] do
 		tremove(arg, 1)
 	end
-	if getn(arg) == 0 then
+	if arg.n < 2 then
 		return nil
 	else
 		return unpack(arg)

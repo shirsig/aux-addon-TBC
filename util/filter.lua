@@ -202,7 +202,9 @@ do
 				self.max_level = self.max_level or self.min_level
 				return self
 			end
-			if self.exact then return end
+			if self.exact then
+				return
+			end
 			local number = tonumber(select(3, strfind(str, '^(%d+)$')))
 			if number then
 				if number >= 1 and number <= 60 then
