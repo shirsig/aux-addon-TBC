@@ -1,5 +1,23 @@
 module 'aux'
 
+if _VERSION == 'Lua 5.0' then
+	M.select = vararg-function(arg)
+		for _ = 1, arg[1] do
+			tremove(arg, 1)
+		end
+		return unpack(arg)
+	end
+elseif _VERSION == 'Lua 5.1' then
+	M.GetItemInfo = function(id)
+		local name, itemstring, quality, _, level, class, subclass, max_stack, slot, texture = _G.GetItemInfo(id)
+		return name, itemstring, quality, level, class, subclass, max_stack, slot, texture
+	end
+end
+
+M.tonumber = function(v)
+	return _G.tonumber(v or nil)
+end
+
 M.immutable = setmetatable(T, {
 	__metatable = false,
 	__newindex = nop,
@@ -7,17 +25,6 @@ M.immutable = setmetatable(T, {
 		return setmetatable(T, O('__metatable', false, '__newindex', nop, '__index', t))
 	end
 })
-
-M.select = _G.select or vararg-function(arg)
-	for _ = 1, arg[1] do
-		tremove(arg, 1)
-	end
-	return unpack(arg)
-end
-
-M.tonumber = function(v)
-	return _G.tonumber(v or nil)
-end
 
 M.join = table.concat
 
