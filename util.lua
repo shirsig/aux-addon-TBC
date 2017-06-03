@@ -6,9 +6,12 @@ if _VERSION then
 		return name, itemstring, quality, level, class, subclass, max_stack, slot, texture
 	end
 	function M.GetAuctionInvTypes(i, j)
-		local types = temp-A(_G.GetAuctionInvTypes(i, j))
-		for i = 2, getn(types), 2 do
-			tremove(types, i)
+		local t = temp-A(_G.GetAuctionInvTypes(i, j))
+		local types = temp-T
+		for i = 1, select('#', _G.GetAuctionInvTypes(i, j)), 2 do
+			if t[i + 1] == 1 then
+				tinsert(types, t[i])
+			end
 		end
 		return unpack(types)
 	end
