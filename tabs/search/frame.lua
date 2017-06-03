@@ -232,7 +232,7 @@ do
     btn:SetPoint('TOPLEFT', buyout_button, 'TOPRIGHT', 5, 0)
     btn:SetText('Remove')
     btn:SetScript('OnClick', function()
-	    listing:RemoveAuctionRecord((listing:GetSelection() or empty).record)
+	    M.listing:RemoveAuctionRecord((M.listing:GetSelection() or empty).record)
     end)
 end
 do
