@@ -17,7 +17,7 @@ local al = require 'aux.gui.auction_listing'
 
 TAB 'Post'
 
-local DURATION_2, DURATION_8, DURATION_24, DURATION_48 = 120, 480, 1440, 2880
+local DURATION_2, DURATION_8, DURATION_12, DURATION_24, DURATION_48 = 120, 480, 720, 1440, 2880
 
 local settings_schema = {'tuple', '#', {duration='number'}, {start_price='number'}, {buyout_price='number'}, {hidden='boolean'}}
 
@@ -220,7 +220,7 @@ function post_auctions()
             duration_code = 2
 		elseif duration == DURATION_8 then
             duration_code = 3
-		elseif duration == DURATION_24 then
+		elseif duration == DURATION_12 or duration == DURATION_24 then
             duration_code = 4
 		elseif duration == DURATION_48 then
 			duration_code = 5
@@ -549,27 +549,36 @@ function initialize_duration_dropdown()
         write_settings(settings)
         refresh = true
     end
-    if not _VERSION then
+    if _VERSION then
+	    UIDropDownMenu_AddButton{
+		    text = '12 Hours',
+		    value = DURATION_12,
+		    func = on_click,
+	    }
+	    UIDropDownMenu_AddButton{
+		    text = '24 Hours',
+		    value = DURATION_24,
+		    func = on_click,
+	    }
+	    UIDropDownMenu_AddButton{
+		    text = '48 Hours',
+		    value = DURATION_48,
+		    func = on_click,
+	    }
+    else
 	    UIDropDownMenu_AddButton{
 		    text = '2 Hours',
 		    value = DURATION_2,
 		    func = on_click,
 	    }
-    end
-    UIDropDownMenu_AddButton{
-	    text = '8 Hours',
-        value = DURATION_8,
-        func = on_click,
-    }
-    UIDropDownMenu_AddButton{
-        text = '24 Hours',
-        value = DURATION_24,
-        func = on_click,
-    }
-    if _VERSION then
 	    UIDropDownMenu_AddButton{
-		    text = '48 Hours',
-		    value = DURATION_48,
+		    text = '8 Hours',
+		    value = DURATION_8,
+		    func = on_click,
+	    }
+	    UIDropDownMenu_AddButton{
+		    text = '24 Hours',
+		    value = DURATION_24,
 		    func = on_click,
 	    }
     end
