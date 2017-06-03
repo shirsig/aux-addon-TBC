@@ -234,6 +234,13 @@ do
     btn:SetScript('OnClick', function()
 	    current_search.table:RemoveAuctionRecord((current_search.table:GetSelection() or empty).record)
     end)
+	btn:SetScript('OnUpdate', function()
+		if current_search.table:GetSelection() then
+			btn:Enable()
+		else
+			btn:Disable()
+		end
+	end)
 end
 do
     local btn = gui.button(frame.saved)
