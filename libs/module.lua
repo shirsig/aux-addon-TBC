@@ -4,7 +4,7 @@ local error, nop, define, include, create_module, nop_default_mt, public_modifie
 local loaded, defined, interfaces, environments = {}, {}, {}, {}
 
 function nop() end
-function error(msg, ...) end -- TODO return _G.error(format(msg or '', unpack(arg)) .. '\n' .. debugstack(), 0) end
+function error(msg, ...)_G.error('kek') end -- TODO return _G.error(format(msg or '', unpack(arg)) .. '\n' .. debugstack(), 0) end
 
 function define(self, k, v, private)
 	if type(k) ~= 'string' or not strfind(k, '^[_%a][_%w]*') then error('Invalid identifier "%s".', k) end
