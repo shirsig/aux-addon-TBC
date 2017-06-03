@@ -106,7 +106,7 @@ function M.auction(index, query_type)
 	if link then
         local item_id, suffix_id, unique_id, enchant_id = parse_link(link)
         local item_info = temp-item(item_id, suffix_id, unique_id, enchant_id)
-
+        
         local name, texture, count, quality, usable, level, start_price, min_increment, buyout_price, high_bid, high_bidder, owner, sale_status = GetAuctionItemInfo(query_type, index)
 
     	local duration = GetAuctionItemTimeLeft(query_type, index)
@@ -361,16 +361,16 @@ function M.item_key(link)
 end
 
 function M.parse_link(link)
-    local _, _, item_id, enchant_id, suffix_id, unique_id, name = strfind(link, '|c%x%x%x%x%x%x%x%x|Hitem:(%d*):(%d*):(%d*):(%d*)[:0-9]*|h%[(.-)%]|h|r')
+    local _, _, item_id, enchant_id, suffix_id, unique_id, name = strfind(link, '|c%x%x%x%x%x%x%x%x|Hitem:(%d*):(%d*):' .. (_VERSION and '%d*:%d*:%d*:%d*:' or '') .. '(-?%d*):(-?%d*)[:0-9]*|h%[(.-)%]|h|r')
     return tonumber(item_id) or 0, tonumber(suffix_id) or 0, tonumber(unique_id) or 0, tonumber(enchant_id) or 0, name
 end
 
 function M.itemstring(item_id, suffix_id, unique_id, enchant_id)
-    return 'item:' .. (item_id or 0) .. ':' .. (enchant_id or 0) .. ':' .. (suffix_id or 0) .. ':' .. (unique_id or 0)
+    return 'item:' .. item_id .. ':' .. (enchant_id or '') .. (_VERSION and ':::::' or ':') .. (suffix_id or '') .. ':' .. (unique_id or '')
 end
 
 function M.item(item_id, suffix_id)
-    local itemstring = 'item:' .. (item_id or 0) .. ':0:' .. (suffix_id or 0) .. ':0'
+    local itemstring = 'item:' .. item_id .. (_VERSION and '::::::' or '::') .. (suffix_id or '') .. ':'
     local name, itemstring, quality, level, class, subclass, max_stack, slot, texture = GetItemInfo(itemstring)
     return name and O(
         'name', name,
