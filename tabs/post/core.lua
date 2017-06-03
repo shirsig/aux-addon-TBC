@@ -368,7 +368,7 @@ end
 
 function update_item(item)
 	CloseDropDownMenus()
-	
+
     local settings = read_settings(item.key)
 
     item.unit_vendor_price = unit_vendor_price(item.key)

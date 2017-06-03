@@ -230,10 +230,9 @@ end
 do
     local btn = gui.button(frame.results)
     btn:SetPoint('TOPLEFT', buyout_button, 'TOPRIGHT', 5, 0)
-    btn:SetText('Clear')
+    btn:SetText('Remove')
     btn:SetScript('OnClick', function()
-        while tremove(current_search.records) do end
-        current_search.table:SetDatabase()
+	    listing:RemoveAuctionRecord((listing:GetSelection() or empty).record)
     end)
 end
 do
