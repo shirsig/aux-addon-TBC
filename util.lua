@@ -1,9 +1,16 @@
 module 'aux'
 
 if _VERSION then
-	M.GetItemInfo = function(id)
+	function M.GetItemInfo(id)
 		local name, itemstring, quality, _, level, class, subclass, max_stack, slot, texture = _G.GetItemInfo(id)
 		return name, itemstring, quality, level, class, subclass, max_stack, slot, texture
+	end
+	function M.GetAuctionInvTypes(i, j)
+		local types = temp-A(_G.GetAuctionInvTypes(i, j))
+		for i = 2, getn(types), 2 do
+			tremove(types, i)
+		end
+		return unpack(types)
 	end
 else
 	M.select = vararg-function(arg)
