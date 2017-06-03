@@ -218,12 +218,10 @@ function post_auctions()
         local duration_code
 		if duration == DURATION_2 then
             duration_code = 2
-		elseif duration == DURATION_8 then
+		elseif duration == DURATION_8 or duration == DURATION_12 then
             duration_code = 3
-		elseif duration == DURATION_12 or duration == DURATION_24 then
+		elseif duration == DURATION_24 or duration == DURATION_48 then
             duration_code = 4
-		elseif duration == DURATION_48 then
-			duration_code = 5
 		end
 
 		post.start(
