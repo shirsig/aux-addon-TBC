@@ -1,4 +1,4 @@
-if _VERSION == 'Lua 5.1' then
+if _VERSION then
 	table.setn = function() end
 	string.gfind = string.gmatch
 end

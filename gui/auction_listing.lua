@@ -22,6 +22,7 @@ local TIME_LEFT_STRINGS = {
 	color.orange'2h', -- Medium
 	color.yellow'8h', -- Long
 	color.blue'24h', -- Very Long
+	color.blue'48h', -- Very Long
 }
 
 function item_column_init(rt, cell)

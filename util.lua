@@ -1,6 +1,6 @@
 module 'aux'
 
-if _VERSION == 'Lua 5.1' then
+if _VERSION then
 	M.GetItemInfo = function(id)
 		local name, itemstring, quality, _, level, class, subclass, max_stack, slot, texture = _G.GetItemInfo(id)
 		return name, itemstring, quality, level, class, subclass, max_stack, slot, texture

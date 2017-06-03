@@ -17,13 +17,23 @@ local al = require 'aux.gui.auction_listing'
 
 TAB 'Post'
 
-local DURATION_4, DURATION_8, DURATION_24 = 120, 480, 1440
+local DURATION_1, DURATION_2, DURATION_3, DURATION_TEXT_1, DURATION_TEXT_2, DURATION_TEXT_3, DURATION_CODE_1, DURATION_CODE_2, DURATION_CODE_3
+if _VERSION then
+	DURATION_1, DURATION_2, DURATION_3 = 1, 2, 3
+	DURATION_TEXT_1, DURATION_TEXT_2, DURATION_TEXT_3 = '8 Hours', '24 Hours', '48 Hours'
+	DURATION_CODE_1, DURATION_CODE_2, DURATION_CODE_3 = 3, 4, 5
+else
+	DURATION_1, DURATION_2, DURATION_3 = 120, 480, 1440
+	DURATION_TEXT_1, DURATION_TEXT_2, DURATION_TEXT_3 = '2 Hours', '8 Hours', '24 Hours'
+	DURATION_CODE_1, DURATION_CODE_2, DURATION_CODE_3 = 2, 3, 4
+end
+
 local settings_schema = {'tuple', '#', {duration='number'}, {start_price='number'}, {buyout_price='number'}, {hidden='boolean'}}
 
 local scan_id, inventory_records, bid_records, buyout_records = 0, {}, {}, {}
 
 function get_default_settings()
-	return O('duration', DURATION_8, 'start_price', 0, 'buyout_price', 0, 'hidden', false)
+	return O('duration', DURATION_2, 'start_price', 0, 'buyout_price', 0, 'hidden', false)
 end
 
 function LOAD2()
@@ -215,12 +225,12 @@ function post_auctions()
 		local key = selected_item.key
 
         local duration_code
-		if duration == DURATION_4 then
-            duration_code = 2
-		elseif duration == DURATION_8 then
-            duration_code = 3
-		elseif duration == DURATION_24 then
-            duration_code = 4
+		if duration == DURATION_1 then
+            duration_code = DURATION_CODE_1
+		elseif duration == DURATION_2 then
+            duration_code = DURATION_CODE_2
+		elseif duration == DURATION_3 then
+            duration_code = DURATION_CODE_3
 		end
 
 		post.start(
@@ -547,18 +557,18 @@ function initialize_duration_dropdown()
         refresh = true
     end
     UIDropDownMenu_AddButton{
-        text = '2 Hours',
-        value = DURATION_4,
+        text = DURATION_TEXT_1,
+        value = DURATION_1,
         func = on_click,
     }
     UIDropDownMenu_AddButton{
-        text = '8 Hours',
-        value = DURATION_8,
+	    text = DURATION_TEXT_2,
+        value = DURATION_2,
         func = on_click,
     }
     UIDropDownMenu_AddButton{
-        text = '24 Hours',
-        value = DURATION_24,
+        text = DURATION_TEXT_3,
+        value = DURATION_3,
         func = on_click,
     }
 end
