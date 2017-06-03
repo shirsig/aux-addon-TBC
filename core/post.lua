@@ -77,6 +77,7 @@ end
 
 function M.start(item_key, stack_size, duration, unit_start_price, unit_buyout_price, count, callback)
 	stop()
+	print(AuctionFramePost_GetDuration())
 	state = {
 		thread_id = thread(process),
 		item_key = item_key,
