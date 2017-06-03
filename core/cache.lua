@@ -106,7 +106,7 @@ function M.item_info(item_id)
 		local cached_data = persistence.read(items_schema, data_string)
 		return O(
 			'name', cached_data.name,
-			'itemstring', 'item:' .. item_id .. ':0:0:0',
+			'itemstring', 'item:' .. item_id,
 			'quality', cached_data.quality,
 			'level', cached_data.level,
 			'class', cached_data.class,
