@@ -1,16 +1,16 @@
 module 'aux'
 
-if _VERSION == 'Lua 5.0' then
+if _VERSION == 'Lua 5.1' then
+	M.GetItemInfo = function(id)
+		local name, itemstring, quality, _, level, class, subclass, max_stack, slot, texture = _G.GetItemInfo(id)
+		return name, itemstring, quality, level, class, subclass, max_stack, slot, texture
+	end
+else
 	M.select = vararg-function(arg)
 		for _ = 1, arg[1] do
 			tremove(arg, 1)
 		end
 		return unpack(arg)
-	end
-elseif _VERSION == 'Lua 5.1' then
-	M.GetItemInfo = function(id)
-		local name, itemstring, quality, _, level, class, subclass, max_stack, slot, texture = _G.GetItemInfo(id)
-		return name, itemstring, quality, level, class, subclass, max_stack, slot, texture
 	end
 end
 
