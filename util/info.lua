@@ -298,7 +298,7 @@ end
 
 function item_charges(tooltip)
 	for _, line in pairs(tooltip) do
-        local pattern = '^' .. gsub(gsub(ITEM_SPELL_CHARGES_P1 or ITEM_SPELL_CHARGES, '%%d', '(%%d+)'), '%%%d+%$d', '(%%d+)') .. '$'
+        local pattern = '^' .. gsub(gsub(ITEM_SPELL_CHARGES_P1, '%%d', '(%%d+)'), '%%%d+%$d', '(%%d+)') .. '$'
 
         local _, _, left_charges_string = strfind(line.left_text or '', pattern)
         local _, _, right_charges_string = strfind(line.right_text or '', pattern)
