@@ -232,10 +232,12 @@ do
     btn:SetPoint('TOPLEFT', buyout_button, 'TOPRIGHT', 5, 0)
     btn:SetText('Remove')
     btn:SetScript('OnClick', function()
-	    current_search.table:RemoveAuctionRecord((current_search.table:GetSelection() or empty).record)
+	    if not bid_in_progress then
+	        current_search.table:RemoveAuctionRecord((current_search.table:GetSelection() or empty).record)
+	    end
     end)
 	btn:SetScript('OnUpdate', function()
-		if current_search.table:GetSelection() and not bid_in_progress then
+		if current_search.table:GetSelection() then
 			btn:Enable()
 		else
 			btn:Disable()
