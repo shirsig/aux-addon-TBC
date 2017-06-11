@@ -251,7 +251,7 @@ function Blizzard_AuctionUI()
 		end
 		return orig.ShowUIPanel(unpack(arg))
 	end)
-	hook 'GetOwnerAuctionItems' 'SetItemRef' 'UseContainerItem' 'AuctionFrameAuctions_OnEvent'
+	hook 'GetOwnerAuctionItems' 'SetItemRef' 'AuctionFrameAuctions_OnEvent'
 end
 
 do

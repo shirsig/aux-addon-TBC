@@ -66,7 +66,6 @@ function M.copy(t)
 	for k, v in pairs(t) do
 		copy[k] = v
 	end
-	table.setn(copy, getn(t))
 	return setmetatable(copy, getmetatable(t))
 end
 

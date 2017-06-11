@@ -1,7 +1,7 @@
 if defined 'T' then return end
 module 'T'
 
-local next, getn, setn, tremove, setmetatable = next, getn, table.setn, tremove, setmetatable
+local next, getn, tremove, setmetatable = next, getn, tremove, setmetatable
 
 local wipe, acquire, release
 local pool, pool_size, overflow_pool, auto_release = {}, 0, setmetatable({}, {__mode='k'}), {}
@@ -12,7 +12,6 @@ function wipe(t)
 		t[k] = nil
 	end
 	t.reset, t.reset = nil, 1
-	setn(t, 0)
 end
 M.wipe = wipe
 
@@ -76,7 +75,7 @@ do
 	local MAXPARAMS = 100
 
 	local code = [[
-		local f, setn, acquire, auto_release = f, setn, acquire, auto_release
+		local f, acquire, auto_release = f, acquire, auto_release
 		return function(
 	]]
 	for i = 1, MAXPARAMS - 1 do
@@ -95,7 +94,6 @@ do
 		until true
 		local t = acquire()
 		auto_release[t] = true
-		setn(t, n) -- TODO
 		t.n = n
 		repeat
 	]]
@@ -110,7 +108,7 @@ do
 
 	function vararg(f)
 		local chunk = loadstring(code)
-		setfenv(chunk, {f=f, setn=setn, acquire=acquire, auto_release=auto_release})
+		setfenv(chunk, {f=f, acquire=acquire, auto_release=auto_release})
 		return chunk()
 	end
 	M.vararg = setmetatable({}, {
@@ -124,7 +122,6 @@ M.A = vararg(function(arg)
 	for i = 1, arg.n do
 		t[i] = arg[i]
 	end
-	setn(t, arg.n)
 	return t
 end)
 M.S = vararg(function(arg)

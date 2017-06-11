@@ -549,37 +549,19 @@ function initialize_duration_dropdown()
         write_settings(settings)
         refresh = true
     end
-    if _VERSION then
-	    UIDropDownMenu_AddButton{
-		    text = '12 Hours',
-		    value = DURATION_12,
-		    func = on_click,
-	    }
-	    UIDropDownMenu_AddButton{
-		    text = '24 Hours',
-		    value = DURATION_24,
-		    func = on_click,
-	    }
-	    UIDropDownMenu_AddButton{
-		    text = '48 Hours',
-		    value = DURATION_48,
-		    func = on_click,
-	    }
-    else
-	    UIDropDownMenu_AddButton{
-		    text = '2 Hours',
-		    value = DURATION_2,
-		    func = on_click,
-	    }
-	    UIDropDownMenu_AddButton{
-		    text = '8 Hours',
-		    value = DURATION_8,
-		    func = on_click,
-	    }
-	    UIDropDownMenu_AddButton{
-		    text = '24 Hours',
-		    value = DURATION_24,
-		    func = on_click,
-	    }
-    end
+    UIDropDownMenu_AddButton{
+	    text = '12 Hours',
+	    value = DURATION_12,
+	    func = on_click,
+    }
+    UIDropDownMenu_AddButton{
+	    text = '24 Hours',
+	    value = DURATION_24,
+	    func = on_click,
+    }
+    UIDropDownMenu_AddButton{
+	    text = '48 Hours',
+	    value = DURATION_48,
+	    func = on_click,
+    }
 end
