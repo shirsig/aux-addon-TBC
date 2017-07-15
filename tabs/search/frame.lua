@@ -24,12 +24,12 @@ frame.saved = CreateFrame('Frame', nil, frame)
 frame.saved:SetAllPoints(AuxFrame.content)
 
 frame.saved.favorite = gui.panel(frame.saved)
-frame.saved.favorite:SetWidth(393)
+frame.saved.favorite:SetWidth(378.5)
 frame.saved.favorite:SetPoint('TOPLEFT', 0, 0)
 frame.saved.favorite:SetPoint('BOTTOMLEFT', 0, 0)
 
 frame.saved.recent = gui.panel(frame.saved)
-frame.saved.recent:SetWidth(364.5)
+frame.saved.recent:SetPoint('LEFT', frame.saved.favorite, 'RIGHT', 2.5, 0)
 frame.saved.recent:SetPoint('TOPRIGHT', 0, 0)
 frame.saved.recent:SetPoint('BOTTOMRIGHT', 0, 0)
 do
@@ -544,7 +544,7 @@ for _ = 1, 5 do
 end
 
 favorite_searches_listing = listing.new(frame.saved.favorite)
-favorite_searches_listing:SetColInfo{{name='Auto Buy', width=.07, align='CENTER'}, {name='Favorite Searches', width=.93}}
+favorite_searches_listing:SetColInfo{{name='Favorite Searches', width=1}}
 
 recent_searches_listing = listing.new(frame.saved.recent)
 recent_searches_listing:SetColInfo{{name='Recent Searches', width=1}}

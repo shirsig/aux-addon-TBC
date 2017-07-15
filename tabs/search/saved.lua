@@ -13,7 +13,7 @@ function update_search_listings()
 		local search = favorite_searches[i]
 		local name = strsub(search.prettified, 1, 250)
 		tinsert(favorite_search_rows, O(
-			'cols', A(O('value', search.auto_buy and color.red'X' or ''), O('value', name)),
+			'cols', A(O('value', name)),
 			'search', search,
 			'index', i
 		))
@@ -60,9 +60,7 @@ handlers = {
 				tinsert(favorite_searches, 1, data.search)
 				u(d)
 			elseif st == favorite_searches_listing then
-				local auto_buy = data.search.auto_buy
 				gui.menu(
-					(auto_buy and 'Disable' or 'Enable') .. ' Auto Buy', function() if auto_buy then data.search.auto_buy = nil else enable_auto_buy(data.search) end u() end,
 					'Move Up', function() move_up(favorite_searches, data.index); u() end,
 					'Move Down', function() move_down(favorite_searches, data.index); u() end,
 					'Delete', function() tremove(favorite_searches, data.index); u() end
@@ -82,23 +80,6 @@ handlers = {
 	end
 }
 
-function get_auto_buy_validator()
-	local validators = T
-	for _, search in pairs(favorite_searches) do
-		if search.auto_buy then
-			local queries, error = filter_util.queries(search.filter_string)
-			if queries then
-				tinsert(validators, queries[1].validator)
-			else
-				print('Invalid auto buy filter:', error)
-			end
-		end
-	end
-	return function(record)
-		return any(validators, function(validator) return validator(record) end)
-	end
-end
-
 function add_favorite(filter_string)
 	local queries, error = filter_util.queries(filter_string)
 	if queries then
@@ -107,21 +88,6 @@ function add_favorite(filter_string)
 			'prettified', join(map(queries, function(query) return query.prettified end), ';')
 		))
 		update_search_listings()
-	else
-		print('Invalid filter:', error)
-	end
-end
-
-function enable_auto_buy(search)
-	local queries, error = filter_util.queries(search.filter_string)
-	if queries then
-		if getn(queries) > 1 then
-			print('Error: Auto Buy does not support multi-queries')
-		elseif size(queries[1].blizzard_query) > 0 and not filter_util.parse_filter_string(search.filter_string).blizzard.exact then
-			print('Error: Auto Buy does not support Blizzard filters')
-		else
-			search.auto_buy = true
-		end
 	else
 		print('Invalid filter:', error)
 	end

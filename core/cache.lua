@@ -7,7 +7,7 @@ local info = require 'aux.util.info'
 local persistence = require 'aux.util.persistence'
 
 local MIN_ITEM_ID = 1
-local MAX_ITEM_ID = 30000
+local MAX_ITEM_ID = 100000
 
 local items_schema = {'tuple', '#', {name='string'}, {quality='number'}, {level='number'}, {class='string'}, {subclass='string'}, {slot='string'}, {max_stack='number'}, {texture='string'}}
 local merchant_buy_schema = {'tuple', '#', {unit_price='number'}, {limited='boolean'}}
