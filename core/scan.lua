@@ -125,7 +125,7 @@ end
 function scan_page(i)
 	i = i or 1
 
-	if i > PAGE_SIZE then
+	if state.params.type == 'list' and i > PAGE_SIZE then
 		do (state.params.on_page_scanned or nop)() end
 		if query.blizzard_query and state.page < last_page(state.total_auctions) then
 			state.page = state.page + 1
@@ -133,6 +133,8 @@ function scan_page(i)
 		else
 			return scan()
 		end
+	elseif state.params.type ~= 'list' and i > state.total_auctions then
+		return complete()
 	end
 
 	local auction_info = info.auction(i, state.params.type)
