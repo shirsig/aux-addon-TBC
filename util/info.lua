@@ -370,7 +370,7 @@ function M.itemstring(item_id, suffix_id, unique_id, enchant_id)
 end
 
 function M.item(item_id, suffix_id)
-    local itemstring = 'item:' .. item_id .. '::::::' .. (suffix_id or '') .. ':'
+    local itemstring = 'item:' .. (item_id or 0) .. '::::::' .. (suffix_id or '') .. ':'
     local name, itemstring, quality, level, class, subclass, max_stack, slot, texture = GetItemInfo(itemstring)
     return name and O(
         'name', name,
