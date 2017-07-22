@@ -207,7 +207,7 @@ do
 			end
 			local number = tonumber(select(3, strfind(str, '^(%d+)$')))
 			if number then
-				if number >= 1 and number <= 60 then
+				if number >= 1 and number <= 70 then
 					for _, key in ipairs(temp-A('min_level', 'max_level')) do
 						if not self[key] then
 							self[key] = A(str, number)
