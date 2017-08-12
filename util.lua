@@ -5,11 +5,11 @@ if _VERSION then
 		local name, itemstring, quality, _, level, class, subclass, max_stack, slot, texture = _G.GetItemInfo(id)
 		return name, itemstring, quality, level, class, subclass, max_stack, slot, texture
 	end
-	function M.GetAuctionInvTypes(i, j)
+	function M.GetAuctionInvTypes(i, j, displayed)
 		local t = temp-A(_G.GetAuctionInvTypes(i, j))
 		local types = temp-T
 		for i = 1, select('#', _G.GetAuctionInvTypes(i, j)), 2 do
-			if t[i + 1] == 1 then
+			if not displayed or t[i + 1] == 1 then
 				tinsert(types, t[i])
 			end
 		end

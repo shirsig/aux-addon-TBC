@@ -135,7 +135,7 @@ function get_filter_builder_query()
 	end
 	local slot_index = blizzard_query.slot
 	if slot_index then
-		local slots = temp-A(GetAuctionInvTypes(blizzard_query.class or 0, blizzard_query.subclass or 0))
+		local slots = temp-A(GetAuctionInvTypes(blizzard_query.class or 0, blizzard_query.subclass or 0, true))
 		add(strlower(_G[slots[slot_index]]))
 	end
 
@@ -377,7 +377,7 @@ function initialize_slot_dropdown()
 		update_form()
 	end
 	UIDropDownMenu_AddButton(O('text', ALL, 'value', 0, 'func', on_click))
-	for i, slot in ipairs(temp-A(GetAuctionInvTypes(blizzard_query.class == 2 and 2 or 0, blizzard_query.subclass or 0))) do
+	for i, slot in ipairs(temp-A(GetAuctionInvTypes(blizzard_query.class == 2 and 2 or 0, blizzard_query.subclass or 0, true))) do
 		UIDropDownMenu_AddButton(O('text', _G[slot], 'value', i, 'func', on_click))
 	end
 end
