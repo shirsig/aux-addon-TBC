@@ -3,7 +3,6 @@ module 'aux.tabs.auctions'
 include 'T'
 include 'aux'
 
-local info = require 'aux.util.info'
 local scan_util = require 'aux.util.scan'
 local scan = require 'aux.core.scan'
 
@@ -11,9 +10,13 @@ TAB 'Auctions'
 
 auction_records = T
 
+function LOAD()
+	event_listener('AUCTION_OWNED_LIST_UPDATE', scan_auctions)
+end
+
 function OPEN()
     frame:Show()
-    scan_auctions()
+    GetOwnerAuctionItems()
 end
 
 function CLOSE()
@@ -33,11 +36,6 @@ function M.scan_auctions()
     update_listing()
     scan.start{
         type = 'owner',
-        queries = {{blizzard_query = T}},
-        on_page_loaded = function(page, total_pages)
-            status_bar:update_status(page / total_pages, 0)
-            status_bar:set_text(format('Scanning (Page %d / %d)', page, total_pages))
-        end,
         on_auction = function(auction_record)
             tinsert(auction_records, auction_record)
         end,

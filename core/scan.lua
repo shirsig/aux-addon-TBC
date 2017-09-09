@@ -59,7 +59,11 @@ do
 end
 
 function get_query()
-	return state.params.queries[state.query_index]
+	if state.params.type == 'list' then
+		return state.params.queries[state.query_index]
+	else
+		return empty
+	end
 end
 
 function total_pages(total_auctions)
@@ -73,6 +77,10 @@ function last_page(total_auctions)
 end
 
 function scan()
+	if state.params.type ~= 'list' then
+		return scan_page()
+	end
+
 	state.query_index = state.query_index and state.query_index + 1 or 1
 	if query and not state.stopped then
 		do (state.params.on_start_query or nop)(state.query_index) end
@@ -91,40 +99,34 @@ end
 
 do
 	local function submit()
-		if state.params.type == 'bidder' then
-			GetBidderAuctionItems(state.page)
-		elseif state.params.type == 'owner' then
-			GetOwnerAuctionItems(state.page)
-		else
-			state.last_list_query = GetTime()
-			local blizzard_query = query.blizzard_query or T
-			QueryAuctionItems(
-				blizzard_query.name,
-				blizzard_query.min_level,
-				blizzard_query.max_level,
-				blizzard_query.slot,
-				blizzard_query.class,
-				blizzard_query.subclass,
-				state.page,
-				blizzard_query.usable,
-				blizzard_query.quality
-			)
-		end
+		state.last_list_query = GetTime()
+		local blizzard_query = query.blizzard_query or T
+		QueryAuctionItems(
+			blizzard_query.name,
+			blizzard_query.min_level,
+			blizzard_query.max_level,
+			blizzard_query.slot,
+			blizzard_query.class,
+			blizzard_query.subclass,
+			state.page,
+			blizzard_query.usable,
+			blizzard_query.quality
+		)
 		return wait_for_results()
 	end
 	function submit_query()
 		if state.stopped then return end
-		if state.params.type ~= 'list' then
-			return submit()
-		else
-			return when(CanSendAuctionQuery, submit)
-		end
+		return when(CanSendAuctionQuery, submit)
 	end
 end
 
 function scan_page(i)
 	i = i or 1
 
+	if not state.page then
+		_,  state.total_auctions = GetNumAuctionItems(state.params.type)
+	end
+	
 	if state.params.type == 'list' and i > PAGE_SIZE then
 		do (state.params.on_page_scanned or nop)() end
 		if query.blizzard_query and state.page < last_page(state.total_auctions) then
@@ -154,16 +156,6 @@ function scan_page(i)
 	return scan_page(i + 1)
 end
 
-function wait_for_results()
-    if state.params.type == 'bidder' then
-        return when(function() return bids_loaded end, accept_results)
-    elseif state.params.type == 'owner' then
-        return wait_for_owner_results()
-    elseif state.params.type == 'list' then
-        return wait_for_list_results()
-    end
-end
-
 function accept_results()
 	_,  state.total_auctions = GetNumAuctionItems(state.params.type)
 	do
@@ -176,17 +168,7 @@ function accept_results()
 	return scan_page()
 end
 
-function wait_for_owner_results()
-    if state.page == current_owner_page then
-	    return accept_results()
-    else
-	    local updated
-        on_next_event('AUCTION_OWNED_LIST_UPDATE', function() updated = true end)
-	    return when(function() return updated end, accept_results)
-    end
-end
-
-function wait_for_list_results()
+function wait_for_results()
     local updated, last_update
     local listener_id = event_listener('AUCTION_ITEM_LIST_UPDATE', function()
         last_update = GetTime()

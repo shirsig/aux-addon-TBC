@@ -56,7 +56,5 @@ do
     local btn = gui.button(frame)
     btn:SetPoint('TOPLEFT', buyout_button, 'TOPRIGHT', 5, 0)
     btn:SetText('Refresh')
-    btn:SetScript('OnClick', function()
-        scan_bids()
-    end)
+    btn:SetScript('OnClick', GetBidderAuctionItems)
 end

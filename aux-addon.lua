@@ -24,14 +24,8 @@ M.print = vararg-function(arg)
 	DEFAULT_CHAT_FRAME:AddMessage(LIGHTYELLOW_FONT_COLOR_CODE .. '<aux> ' .. join(map(arg, tostring), ' '))
 end
 
-local bids_loaded
-function M.get_bids_loaded() return bids_loaded end
-
-local current_owner_page
-function M.get_current_owner_page() return current_owner_page end
-
 local event_frame = CreateFrame'Frame'
-for event in pairs(temp-S('ADDON_LOADED', 'VARIABLES_LOADED', 'PLAYER_LOGIN', 'AUCTION_HOUSE_SHOW', 'AUCTION_HOUSE_CLOSED', 'AUCTION_BIDDER_LIST_UPDATE', 'AUCTION_OWNED_LIST_UPDATE')) do
+for event in pairs(temp-S('ADDON_LOADED', 'VARIABLES_LOADED', 'PLAYER_LOGIN', 'AUCTION_HOUSE_SHOW', 'AUCTION_HOUSE_CLOSED')) do
 	event_frame:RegisterEvent(event)
 end
 
@@ -217,29 +211,11 @@ function AUCTION_HOUSE_SHOW()
 end
 
 function AUCTION_HOUSE_CLOSED()
-	bids_loaded = false
-	current_owner_page = nil
 	post.stop()
 	stack.stop()
 	scan.abort()
 	tab = nil
 	AuxFrame:Hide()
-end
-
-function AUCTION_BIDDER_LIST_UPDATE()
-	bids_loaded = true
-end
-
-do
-	local last_owner_page_requested
-	function GetOwnerAuctionItems(index)
-		local page = index
-		last_owner_page_requested = index
-		return orig.GetOwnerAuctionItems(index)
-	end
-	function AUCTION_OWNED_LIST_UPDATE()
-		current_owner_page = last_owner_page_requested or 0
-	end
 end
 
 function Blizzard_AuctionUI()
@@ -251,7 +227,7 @@ function Blizzard_AuctionUI()
 		end
 		return orig.ShowUIPanel(unpack(arg))
 	end)
-	hook 'GetOwnerAuctionItems' 'SetItemRef' 'AuctionFrameAuctions_OnEvent'
+	hook 'SetItemRef' 'AuctionFrameAuctions_OnEvent'
 end
 
 do

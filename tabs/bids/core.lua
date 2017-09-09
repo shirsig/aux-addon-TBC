@@ -11,9 +11,13 @@ TAB 'Bids'
 
 auction_records = {}
 
+function LOAD()
+	event_listener('AUCTION_BIDDER_LIST_UPDATE', scan_bids)
+end
+
 function OPEN()
     frame:Show()
-    scan_bids()
+    GetBidderAuctionItems()
 end
 
 function CLOSE()
@@ -33,11 +37,6 @@ function M.scan_bids()
     update_listing()
     scan.start{
         type = 'bidder',
-        queries = A(O('blizzard_query', T)),
-        on_page_loaded = function(page, total_pages)
-            status_bar:update_status(page / total_pages, 0)
-            status_bar:set_text(format('Scanning (Page %d / %d)', page, total_pages))
-        end,
         on_auction = function(auction_record)
             tinsert(auction_records, auction_record)
         end,
