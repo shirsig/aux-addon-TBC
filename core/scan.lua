@@ -126,7 +126,7 @@ function scan_page(i)
 	if not state.page then
 		_,  state.total_auctions = GetNumAuctionItems(state.params.type)
 	end
-	
+
 	if state.params.type == 'list' and i > PAGE_SIZE then
 		do (state.params.on_page_scanned or nop)() end
 		if query.blizzard_query and state.page < last_page(state.total_auctions) then

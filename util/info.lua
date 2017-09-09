@@ -366,11 +366,11 @@ function M.parse_link(link)
 end
 
 function M.itemstring(item_id, suffix_id, unique_id, enchant_id)
-    return 'item:' .. item_id .. ':' .. (enchant_id or '') .. ':::::' .. (suffix_id or '') .. ':' .. (unique_id or '')
+    return 'item:' .. (item_id or 0) .. ':' .. (enchant_id or '') .. ':::::' .. (suffix_id or '') .. ':' .. (unique_id or '')
 end
 
 function M.item(item_id, suffix_id)
-    local itemstring = 'item:' .. (item_id or 0) .. '::::::' .. (suffix_id or '') .. ':'
+    local itemstring = itemstring(item_id, suffix_id)
     local name, itemstring, quality, level, class, subclass, max_stack, slot, texture = GetItemInfo(itemstring)
     return name and O(
         'name', name,
