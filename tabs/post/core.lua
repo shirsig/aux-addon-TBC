@@ -85,8 +85,8 @@ function CLOSE()
     frame:Hide()
 end
 
-function USE_ITEM(item_info)
-	select_item(item_info.item_key)
+function USE_ITEM(item_id, suffix_id)
+	select_item(item_id .. ':' .. suffix_id)
 end
 
 function get_unit_start_price()

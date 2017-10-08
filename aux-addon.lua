@@ -128,13 +128,12 @@ SetItemRef = vararg-function(arg)
 	end
 end
 
-UseContainerItem = vararg-function(arg)
-	if modified or not active_tab then
-		return orig.UseContainerItem(unpack(arg))
+HandleModifiedItemClick = vararg-function(arg)
+	if not IsAltKeyDown() or not active_tab then
+		return orig.HandleModifiedItemClick(unpack(arg))
 	end
-	local item_info = info.container_item(arg[1], arg[2])
-	if item_info and active_tab.USE_ITEM then
-		active_tab.USE_ITEM(item_info)
+	if active_tab.USE_ITEM then
+		active_tab.USE_ITEM(info.parse_link(arg[1]))
 	end
 end
 
@@ -227,7 +226,7 @@ function Blizzard_AuctionUI()
 		end
 		return orig.ShowUIPanel(unpack(arg))
 	end)
-	hook 'SetItemRef' 'AuctionFrameAuctions_OnEvent'
+	hook 'HandleModifiedItemClick' 'SetItemRef' 'AuctionFrameAuctions_OnEvent'
 end
 
 do

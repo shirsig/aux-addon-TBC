@@ -39,8 +39,8 @@ function CLICK_LINK(item_info)
 	execute(nil, false)
 end
 
-function USE_ITEM(item_info)
-	filter = strlower(info.item(item_info.item_id).name) .. '/exact'
+function USE_ITEM(_, _, _, _, name)
+	filter = strlower(name) .. '/exact'
 	execute(nil, false)
 end
 
