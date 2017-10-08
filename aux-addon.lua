@@ -226,7 +226,8 @@ function Blizzard_AuctionUI()
 		end
 		return orig.ShowUIPanel(unpack(arg))
 	end)
-	hook 'HandleModifiedItemClick' 'SetItemRef' 'AuctionFrameAuctions_OnEvent'
+	hook 'SetItemRef' 'AuctionFrameAuctions_OnEvent'
+	hooksecurefunc('HandleModifiedItemClick', HandleModifiedItemClick)
 end
 
 do
