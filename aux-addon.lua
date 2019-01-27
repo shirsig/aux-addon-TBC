@@ -129,10 +129,7 @@ SetItemRef = vararg-function(arg)
 end
 
 HandleModifiedItemClick = vararg-function(arg)
-	if not IsAltKeyDown() or not active_tab then
-		return orig.HandleModifiedItemClick(unpack(arg))
-	end
-	if active_tab.USE_ITEM then
+	if IsAltKeyDown() and active_tab and active_tab.USE_ITEM then
 		active_tab.USE_ITEM(info.parse_link(arg[1]))
 	end
 end
