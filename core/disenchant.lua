@@ -155,7 +155,8 @@ function M.distribution(slot, quality, ilvl)
           )
         elseif ilvl <= 35 then
           return temp-A(
-            temp-O('item_id', 11138, 'min_quantity', 1, 'max_quantity', 1, 'probability', 1))
+            temp-O('item_id', 11138, 'min_quantity', 1, 'max_quantity', 1, 'probability', 1)
+	  )
         elseif ilvl <= 40 then
           return temp-A(
             temp-O('item_id', 11139, 'min_quantity', 1, 'max_quantity', 1, 'probability', 1)
@@ -176,7 +177,7 @@ function M.distribution(slot, quality, ilvl)
           return temp-A(
               temp-O('item_id', 14344, 'min_quantity', 1, 'max_quantity', 1, 'probability', .995), 
               temp-O('item_id', 20725, 'min_quantity', 1, 'max_quantity', 1 , 'probability', .005)
-            )
+          )
         elseif ilvl <= 99 then
           return temp-A(
             temp-O('item_id', 22448, 'min_quantity', 1, 'max_quantity', 1, 'probability', .995), 
