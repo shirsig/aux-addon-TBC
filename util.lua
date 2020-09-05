@@ -2,8 +2,8 @@ module 'aux'
 
 if _VERSION then
 	function M.GetItemInfo(id)
-		local name, itemstring, quality, _, level, class, subclass, max_stack, slot, texture = _G.GetItemInfo(id)
-		return name, itemstring, quality, level, class, subclass, max_stack, slot, texture
+		local name, itemstring, quality, ilvl, level, class, subclass, max_stack, slot, texture = _G.GetItemInfo(id)
+		return name, itemstring, quality, ilvl, level, class, subclass, max_stack, slot, texture
 	end
 	function M.GetAuctionInvTypes(i, j, displayed)
 		local t = temp-A(_G.GetAuctionInvTypes(i, j))

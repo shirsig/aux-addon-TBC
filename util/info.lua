@@ -371,12 +371,13 @@ end
 
 function M.item(item_id, suffix_id)
     local itemstring = itemstring(item_id, suffix_id)
-    local name, itemstring, quality, level, class, subclass, max_stack, slot, texture = GetItemInfo(itemstring)
+    local name, itemstring, quality, ilvl, level, class, subclass, max_stack, slot, texture = GetItemInfo(itemstring)
     return name and O(
         'name', name,
         'itemstring', itemstring,
         'quality', quality,
         'level', level,
+        'ilvl', ilvl,
         'class', class,
         'subclass', subclass,
         'slot', slot,

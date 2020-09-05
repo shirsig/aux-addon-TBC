@@ -108,6 +108,7 @@ function M.item_info(item_id)
 			'name', cached_data.name,
 			'itemstring', 'item:' .. item_id,
 			'quality', cached_data.quality,
+      'ilvl', cached_data.ilvl,
 			'level', cached_data.level,
 			'class', cached_data.class,
 			'subclass', cached_data.subclass,

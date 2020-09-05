@@ -56,7 +56,7 @@ function M.extend_tooltip(tooltip, link, quantity)
     quantity = IsShiftKeyDown() and quantity or 1
     local item_info = temp-info.item(item_id)
     if item_info then
-        local distribution = disenchant.distribution(item_info.slot, item_info.quality, item_info.level)
+        local distribution = disenchant.distribution(item_info.slot, item_info.quality, item_info.ilvl)
         if getn(distribution) > 0 then
             if settings.disenchant_distribution then
                 tooltip:AddLine('Disenchants into:', color.tooltip.disenchant.distribution())
@@ -66,7 +66,7 @@ function M.extend_tooltip(tooltip, link, quantity)
                 end
             end
             if settings.disenchant_value then
-                local disenchant_value = disenchant.value(item_info.slot, item_info.quality, item_info.level)
+                local disenchant_value = disenchant.value(item_info.slot, item_info.quality, item_info.ilvl)
                 tooltip:AddLine('Disenchant: ' .. (disenchant_value and money.to_string2(disenchant_value) or UNKNOWN), color.tooltip.disenchant.value())
             end
         end
